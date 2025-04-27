@@ -3,7 +3,6 @@
 ## 서버 실행 가이드
 
 ```
-git jsonlone
 npm install
 node server.js
 ```
