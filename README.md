@@ -38,8 +38,12 @@ bajsonkend
 "email": "hanol@example.com",
 "password": "1234"}
 ```
-database를 현재 이용할 수 없기 때문에 devLogin.js에 개발자용 계정을 하드코딩했습니다. 
+database를 현재 이용할 수 없기 때문에 devLogin.js에 개발자용 계정을 하드코딩했습니다. <br>
 인증이 요구되는 코드를 작성시에 위 계정을 이용해주세요. 
+
+## .env 파일 (환경변수)
+보안상 git에 올릴 수 없는 변수 파일입니다.
+협의 후에 작성된 .env 파일은 테스트시 backend 폴더에 배치해주세요.
 
 ## auth 명세서
 
