@@ -145,7 +145,7 @@ bajsonkend
   - Body
 
   ```json
-  { "accessToken" : accessToken}
+  { "accessToken" : "ef3464r...."}
   ```
 
 - 갱신 실패: refreshToken 존재 X
