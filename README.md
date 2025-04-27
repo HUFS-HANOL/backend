@@ -43,10 +43,11 @@ bajsonkend
     ```json
     {
       "username": "username",
-      "email": "email", //@이 포함되어야 함.
+      "email": "email", 
       "password": "password"
     }
     ```
+    email은 @이 포함되어야 함.
 
 - ### Response
 - 회원가입 성공
@@ -83,11 +84,12 @@ bajsonkend
   - Body
     ```json
     {
-      "identifier": "username" || "email",
+      "identifier": "identifier",
       "password": "password"
     }
     ```
-
+    identifier에는 username, email 둘 다 들어갈 수 있음
+    
 - ### Response
 - 로그인 성공
 
