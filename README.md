@@ -99,7 +99,7 @@ bajsonkend
   ```json
   {
         "authMessage": "로그인에 성공했습니다.",
-        "accessToken" : accessToken
+        "accessToken" : "ef3464r...."
   }
   ```
 
