@@ -31,6 +31,16 @@ bajsonkend
         authRoutes.js // auth 라우팅
 ```
 
+## 개발자용 계정 
+```json
+{ "id": 1,
+"username": "hanol",
+"email": "hanol@example.com",
+"password": "1234"}
+```
+database를 현재 이용할 수 없기 때문에 devLogin.js에 개발자용 계정을 하드코딩했습니다. 
+인증이 요구되는 코드를 작성시에 위 계정을 이용해주세요. 
+
 ## auth 명세서
 
 ### 회원가입 API
