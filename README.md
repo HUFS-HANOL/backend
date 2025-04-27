@@ -6,6 +6,7 @@
 npm install
 node server.js
 ```
+merge 후 수정 예정
 
 ## 백엔드 서버 주소
 
