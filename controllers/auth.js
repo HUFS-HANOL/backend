@@ -2,8 +2,12 @@ require('dotenv').config();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const db = require("../models/database");
-const accessSecretKey = process.env.ACCESS_SECRETKEY;
-const refreshSecretKey = process.env.REFRESH_SECRETKEY;
+const accessSecretKey = "accessSecretKey"
+const refreshSecretKey = "refreshSecretKey"
+
+// .env 파일 생성 후 공유시 활성화
+// const accessSecretKey = process.env.ACCESS_SECRETKEY;
+// const refreshSecretKey = process.env.REFRESH_SECRETKEY;
 
 //회원가입
 exports.register = async (req, res) => {
