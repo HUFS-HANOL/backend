@@ -118,11 +118,9 @@ exports.logout = (req, res) => {
 exports.authenticateToken = (req, res, next) => {
     const authHeader = req.header("Authorization");
     const token = authHeader?.split(" ")[1];
-    console.log("Authorization Header:", req.header("Authorization"));
-    console.log(token)
     if (!token) {
         console.log("Access Denied. 토큰이 제공되지 않음.")
-        return res.status(401).json({ authMessage: "Access Denied. 토큰이 제공되지 않았습니다." });
+        return res.status(401).json({ authMessage: "인증에 실패했습니다." });
     }
 
     // Access Token 검증
