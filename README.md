@@ -6,7 +6,7 @@
 
 1. 레포지토리 클론하기
 ```bash
-git clone https://github.com/
+git clone https://github.com/seo614/hanol_db.git
 cd hanol_db
 ```
 
