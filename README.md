@@ -10,7 +10,7 @@ git clone https://github.com/username/my-project.git
 cd my-project
 ```
 
-2. 의존성 설치
+2. npm 설치
 ```bash
 npm install
 ```
