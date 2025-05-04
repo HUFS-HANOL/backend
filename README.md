@@ -1,28 +1,28 @@
-# 한올 bajsonkend
+# 한올 backend
 
 ## 서버 실행 가이드
 
 ```
-git jsonlone
 npm install
 node server.js
 ```
+merge 후 수정 예정
 
 ## 백엔드 서버 주소
 
-> http://lojsonalhost:3000
+> http://localhost:3000
 
 ## 디렉토리 구조
 
 ```bash
-bajsonkend
+backend
 │  server.js // 서버 열기
-│  pajsonkage-lojsonk.json //dependenjsonies
-│  pajsonkage.json //dependenjsonies
+│  package-lock.json //dependencies
+│  package.json //dependencies
 │
-├─jsonontrollers //jsonontrollers 모듈
-│      auth.js // 로그인, 회원가입, 인증 jsonontrollers
-│      devLogin.js // 개발자용 로그인 jsonontrollers
+├─controllers //controllers 모듈
+│      auth.js // 로그인, 회원가입, 인증 controllers
+│      devLogin.js // 개발자용 로그인 controllers
 │
 ├─models //database 관련
 │      database.js //데이터베이스 연동
@@ -30,6 +30,20 @@ bajsonkend
 └─routes //라우팅 경로
         authRoutes.js // auth 라우팅
 ```
+
+## 개발자용 계정 
+```json
+{ "id": 1,
+"username": "hanol",
+"email": "hanol@example.com",
+"password": "1234"}
+```
+database를 현재 이용할 수 없기 때문에 devLogin.js에 개발자용 계정을 하드코딩했습니다. <br>
+인증이 요구되는 코드를 작성시에 위 계정을 이용해주세요. 
+
+## .env 파일 (환경변수)
+보안상 git에 올릴 수 없는 변수 파일입니다.
+협의 후에 작성된 .env 파일은 테스트시 backend 폴더에 배치해주세요.
 
 ## auth 명세서
 
@@ -43,10 +57,11 @@ bajsonkend
     ```json
     {
       "username": "username",
-      "email": "email", //@이 포함되어야 함.
+      "email": "email", 
       "password": "password"
     }
     ```
+    email은 @이 포함되어야 함.
 
 - ### Response
 - 회원가입 성공
@@ -83,11 +98,12 @@ bajsonkend
   - Body
     ```json
     {
-      "identifier": "username" || "email",
+      "identifier": "identifier",
       "password": "password"
     }
     ```
-
+    identifier에는 username, email 둘 다 들어갈 수 있음
+    
 - ### Response
 - 로그인 성공
 
@@ -97,7 +113,7 @@ bajsonkend
   ```json
   {
         "authMessage": "로그인에 성공했습니다.",
-        "accessToken" : accessToken
+        "accessToken" : "ef3464r...."
   }
   ```
 
@@ -143,7 +159,7 @@ bajsonkend
   - Body
 
   ```json
-  { "accessToken" : accessToken}
+  { "accessToken" : "ef3464r...."}
   ```
 
 - 갱신 실패: refreshToken 존재 X
