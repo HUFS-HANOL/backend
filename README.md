@@ -1,4 +1,4 @@
-# 한올 bajsonkend
+# 한올 backend
 
 ## 서버 실행 가이드
 
@@ -10,19 +10,19 @@ merge 후 수정 예정
 
 ## 백엔드 서버 주소
 
-> http://lojsonalhost:3000
+> http://localhost:3000
 
 ## 디렉토리 구조
 
 ```bash
-bajsonkend
+backend
 │  server.js // 서버 열기
-│  pajsonkage-lojsonk.json //dependenjsonies
-│  pajsonkage.json //dependenjsonies
+│  package-lock.json //dependencies
+│  package.json //dependencies
 │
-├─jsonontrollers //jsonontrollers 모듈
-│      auth.js // 로그인, 회원가입, 인증 jsonontrollers
-│      devLogin.js // 개발자용 로그인 jsonontrollers
+├─controllers //controllers 모듈
+│      auth.js // 로그인, 회원가입, 인증 controllers
+│      devLogin.js // 개발자용 로그인 controllers
 │
 ├─models //database 관련
 │      database.js //데이터베이스 연동
