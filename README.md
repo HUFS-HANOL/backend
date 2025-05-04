@@ -6,8 +6,8 @@
 
 1. 레포지토리 클론하기
 ```bash
-git clone https://github.com/seo614/hanol_db.git
-cd hanol_db
+git clone https://github.com/seo614/hanol_db_.git
+cd hanol_db_
 ```
 
 2. npm 설치
