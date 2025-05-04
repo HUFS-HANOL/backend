@@ -5,8 +5,8 @@ const devLogin = require("../controllers/devLogin")
 const router = express.Router();
 
 router.post("/register", auth.register);
-// router.post("/login", auth.login);
-router.post("/login", devLogin.devLogin);
+router.post("/login", auth.login);
+// router.post("/login", auht.devLogin);
 router.post("/token", auth.refreshToken);
 router.post("/logout", auth.logout);
 router.post("/auth", auth.authenticateToken, (req, res) => {
