@@ -3,6 +3,7 @@
 ## 서버 실행 가이드
 
 ```
+git clone --branch min-auth_ver.1 https://github.com/HUFS-HANOL/backend.git
 npm install
 node server.js
 ```
