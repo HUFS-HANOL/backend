@@ -15,6 +15,7 @@ merge 후 수정 예정
 
 ## .env 파일 관련
 https://github.com/HUFS-HANOL/backend/tree/hanol_database
+<br>
 https://www.notion.so/ERD-DB-env-1c6b98bc90c680d19f14d3bb784595ac?pvs=4
 
 ## 백엔드 서버 주소
