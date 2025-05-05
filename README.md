@@ -4,6 +4,7 @@
 
 ```
 git clone --branch min-auth_ver.1 https://github.com/HUFS-HANOL/backend.git
+cd backend
 npm install
 node server.js
 ```
