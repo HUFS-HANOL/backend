@@ -4,7 +4,9 @@
 
 ```
 git clone --branch min-auth_ver.1 https://github.com/HUFS-HANOL/backend.git
-cd backend
+```
+.env 파일 backend 폴더에 삽입 후 다음 터미널 실행
+```
 npm install
 node server.js
 ```
