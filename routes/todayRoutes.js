@@ -5,3 +5,5 @@ const router = express.Router();
 
 router.post("/database", today.todayToDb);
 router.post("/poemphasre", today.todayPoem);
+
+module.exports = router;

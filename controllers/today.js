@@ -1,4 +1,4 @@
-// const db = require("../models/database");
+const db = require("../models/database");
 
 // 데이터베이스 전송 
 exports.todayToDb = async(req, res) => {

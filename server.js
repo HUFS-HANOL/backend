@@ -3,6 +3,7 @@ const cookieParser = require("cookie-parser");
 const path = require("path");
 const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
+const todayRoutes = require("./routes/todayRoutes");
 
 const app = express();
 const PORT = 3000;
