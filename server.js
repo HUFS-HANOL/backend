@@ -15,7 +15,8 @@ app.use(cors());
 
 
 // Routes
-app.use("/auth", authRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/today",todayRoutes);
 
 // 서버 연결
 app.listen(PORT, () => {
