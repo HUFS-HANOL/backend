@@ -13,8 +13,8 @@ exports.todayToDb = async(req, res) => {
             console.log("일기 데이터베이스 저장 완료");
             res.status(201);
         });
-    } catch (error) {
-        console.error(error);
+    } catch (err) {
+        console.error(err);
         res.status(500).json({ diaryMessage: "서버가 요청을 처리할 수 없습니다. 나중에 다시 시도해주세요." });
     }
 }
