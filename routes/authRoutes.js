@@ -9,7 +9,7 @@ router.post("/login", auth.login);
 router.post("/token", auth.refreshToken);
 router.post("/logout", auth.logout);
 router.post("/auth", auth.authenticateToken, (req, res) => {
-    res.status(200).json({ message: "유효한 토큰", user: req.user });
+    res.status(200).json({ user: req.user });
 });
 
 module.exports = router;
