@@ -4,7 +4,7 @@
 
 ## 📆 월별 캘린더 조회 API
 
-### `GET /calendar/overview`
+### 'POST /calendar/emotion'
 
 #### 요청
 
@@ -31,7 +31,7 @@
 
 ## 💬 감정 상태 저장 API
 
-### `POST /emotion`
+### 'POST /calendar/emotion'
 
 #### 요청
 
@@ -53,7 +53,7 @@
 
 ## ❤️ 시 좋아요/취소 API
 
-### `POST /poem/like`
+### 'POST /calendar/poem/like'
 
 #### 요청
 
@@ -78,7 +78,7 @@
 
 ## 📊 감정 통계 API
 
-### `GET /emotion/stats`
+### 'GET /calendar/emotions/stats'
 
 #### 요청
 
