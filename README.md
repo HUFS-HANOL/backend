@@ -65,7 +65,7 @@ backend
 - ### Response
 - 회원가입 성공
 
-  - HTTP 코드: 201
+  - HTTP 코드: 200
   - Body
     ```json
     { "authMessage": "회원가입이 완료되었습니다." }
@@ -235,3 +235,62 @@ backend
     ```json
     { "authMessage": "인증에 실패했습니다. 다시 로그인해주세요." }
     ```
+
+## today 명세서
+상위 경로: api/today
+
+### 일기->DB API
+
+경로: api/today/database
+
+메서드: POST
+
+request:
+
+```json
+{
+"user_id" : "user_id",
+"content" : "일기 텍스트 값"
+}
+```
+
+*user_id = 1 로 해서 테스트
+
+response: 
+
+성공 - HTTP 코드: 201
+
+error - HTTP 코드: 500 
+
+### 시, 문구 생성 API
+
+*시연을 위해 단순히 더미데이터를 반환하도록 했습니다.
+
+경로: api/today/poemphasre
+
+메서드: POST
+
+request:
+
+```json
+{
+"content" : "일기 텍스트 값"
+}
+```
+
+response:
+
+성공 
+
+```json
+{
+"poem" :  "봄비는 \n 간질이는 손가락을 갖고 있나? \n 대지가 풋사랑에 빠진 것 같다 ",
+"phrase" : "설레는 당신의 순간을 함께 응원할게요."
+}
+```
+
+error - 
+
+status(400) : 데이터베이스 오류
+
+status(500) : 서버 오류
