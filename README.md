@@ -241,7 +241,7 @@ backend
 
 ### 일기->DB API
 
-경로: api/today/database
+경로: api/today/diaries
 
 메서드: POST
 
@@ -266,7 +266,7 @@ error - HTTP 코드: 500
 
 *시연을 위해 단순히 더미데이터를 반환하도록 했습니다.
 
-경로: api/today/poemphasre
+경로: api/today/poemphrase
 
 메서드: POST
 
