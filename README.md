@@ -4,7 +4,7 @@
 
 ## 📆 월별 캘린더 조회 API
 
-### 'POST /calendar/emotion'
+### 'GET/calendar/emotion'
 
 #### 요청
 
