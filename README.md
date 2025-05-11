@@ -45,7 +45,7 @@ backend
 
 ### 회원가입 API
 
-> **HTTP Method:** POST <br> > **URL:** /auth/register
+> **HTTP Method:** POST <br> > **URL:** /api/auth/register
 
 - ### Request
 
@@ -87,7 +87,7 @@ backend
 
 ### 로그인 API
 
-> **HTTP Method:** POST <br> > **URL:** /auth/login
+> **HTTP Method:** POST <br> > **URL:** /api/auth/login
 
 - ### Request
 
@@ -142,7 +142,7 @@ backend
 
 ### acessToken 갱신 API
 
-> **HTTP Method:** POST <br> > **URL:** /auth/token
+> **HTTP Method:** POST <br> > **URL:** /api/auth/token
 
 - ### Request
 
@@ -175,7 +175,7 @@ backend
 
 ### 로그아웃 API
 
-> **HTTP Method:** POST <br> > **URL:** /auth/logout
+> **HTTP Method:** POST <br> > **URL:** /api/auth/logout
 
 - ### Request
 
@@ -193,7 +193,7 @@ backend
 
 ### 토큰 인증 API
 
-> **HTTP Method:** POST <br> > **URL:** /auth/auth
+> **HTTP Method:** POST <br> > **URL:** /api/auth/auth
 
 - ### Request
 
