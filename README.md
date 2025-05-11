@@ -5,7 +5,9 @@
 ```
 git clone --branch min-auth_ver.1 https://github.com/HUFS-HANOL/backend.git
 ```
+
 .env 파일 backend 폴더에 삽입 후 다음 터미널 실행
+
 ```
 npm install
 node server.js
@@ -14,6 +16,7 @@ node server.js
 merge 후 수정 예정
 
 ## .env 파일 관련
+
 https://github.com/HUFS-HANOL/backend/tree/hanol_database
 <br>
 https://www.notion.so/ERD-DB-env-1c6b98bc90c680d19f14d3bb784595ac?pvs=4
@@ -45,7 +48,7 @@ backend
 
 ### 회원가입 API
 
-> **HTTP Method:** POST <br> > **URL:** /auth/register
+> **HTTP Method:** POST <br> > **URL:** /api/auth/register
 
 - ### Request
 
@@ -53,7 +56,7 @@ backend
     ```json
     {
       "username": "username",
-      "email": "email", 
+      "email": "email",
       "password": "password"
     }
     ```
@@ -87,7 +90,7 @@ backend
 
 ### 로그인 API
 
-> **HTTP Method:** POST <br> > **URL:** /auth/login
+> **HTTP Method:** POST <br> > **URL:** /api/auth/login
 
 - ### Request
 
@@ -99,7 +102,7 @@ backend
     }
     ```
     identifier에는 username, email 둘 다 들어갈 수 있음
-    
+
 - ### Response
 - 로그인 성공
 
@@ -108,8 +111,8 @@ backend
 
   ```json
   {
-        "authMessage": "로그인에 성공했습니다.",
-        "accessToken" : "ef3464r...."
+    "authMessage": "로그인에 성공했습니다.",
+    "accessToken": "ef3464r...."
   }
   ```
 
@@ -142,7 +145,7 @@ backend
 
 ### acessToken 갱신 API
 
-> **HTTP Method:** POST <br> > **URL:** /auth/token
+> **HTTP Method:** POST <br> > **URL:** /api/auth/token
 
 - ### Request
 
@@ -155,7 +158,7 @@ backend
   - Body
 
   ```json
-  { "accessToken" : "ef3464r...."}
+  { "accessToken": "ef3464r...." }
   ```
 
 - 갱신 실패: refreshToken 존재 X
@@ -175,7 +178,7 @@ backend
 
 ### 로그아웃 API
 
-> **HTTP Method:** POST <br> > **URL:** /auth/logout
+> **HTTP Method:** POST <br> > **URL:** /api/auth/logout
 
 - ### Request
 
@@ -193,7 +196,7 @@ backend
 
 ### 토큰 인증 API
 
-> **HTTP Method:** POST <br> > **URL:** /auth/auth
+> **HTTP Method:** POST <br> > **URL:** /api/auth/auth
 
 - ### Request
 

@@ -27,7 +27,7 @@ exports.register = async (req, res) => {
                 console.error("데이터 베이스 오류:", err);
                 return res.status(500).json({ authMessage: "서버가 요청을 처리할 수 없습니다. 나중에 다시 시도해주세요." });
             }
-            res.status(201).json({ authMessage: "회원가입이 완료되었습니다." });
+            res.status(200).json({ authMessage: "회원가입이 완료되었습니다." });
         });
     } catch (error) {
         console.error(error);

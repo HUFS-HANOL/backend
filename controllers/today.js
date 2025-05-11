@@ -1,6 +1,6 @@
 const db = require("../models/database");
-let diaryId = ''; // 일기 데이터베이스 전송 함수에서 값 할당
-let emotionId= ''; // 시 값 전송 함수에서 값 할당 (원래는 시,문구 생성 함수에서 할당)
+// let diaryId = ''; // 일기 데이터베이스 전송 함수에서 값 할당
+let emotionId= 1; // 시 값 전송 함수에서 값 할당 (원래는 시,문구 생성 함수에서 할당)
 let poemText =''; // 시 값 전송 함수에서 값 할당 (원래는 시,문구 생성 함수에서 할당)
 
 // 일기 데이터베이스 전송 
@@ -13,9 +13,9 @@ exports.todayDiaryDb = async(req, res) => {
                 console.error("데이터 베이스 오류:", err);
                 return res.status(500).json({ diaryMessage: "서버가 요청을 처리할 수 없습니다. 나중에 다시 시도해주세요." });
             } 
+            res.status(201).json({diaryMessage: "일기 저장 완료"});
+            diaryId = result.insertId
             console.log("일기 데이터베이스 저장 완료");
-            res.status(201);
-            diaryId = result.inserID
         });
     } catch (err) {
         console.error(err);
@@ -33,11 +33,11 @@ exports.todayPoem = async(req,res) => {
     try{
         //시, 문구 생성 반환 함수 실행 후 값 할당
         poemText = "봄비는 \n 간질이는 손가락을 갖고 있나? \n 대지가 풋사랑에 빠진 것 같다 "
-        pharseText = "설레는 당신의 순간을 함께 응원할게요."
+        phraseText = "설레는 당신의 순간을 함께 응원할게요."
     res.json(
         {
             poem: poemText,
-            phrase: pharseText
+            phrase: phraseText
 
         }
     )
@@ -66,7 +66,7 @@ exports.todayPoemDb = async(req, res) => {
                 return res.status(500).json({ diaryMessage: "서버가 요청을 처리할 수 없습니다. 나중에 다시 시도해주세요." });
             }
             console.log("시 데이터베이스 저장 완료");
-            res.status(201);
+            res.status(201).json({diaryMessage:"시 저장 완료."});
         });
     } catch (err) {
         console.error(err);
