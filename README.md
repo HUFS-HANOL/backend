@@ -237,7 +237,9 @@ backend
     ```
 
 ## today 명세서
+
 상위 경로: api/today
+**05.18** diary_id,emotion_id 관련 추가
 
 ### 일기->DB API
 
@@ -249,22 +251,33 @@ request:
 
 ```json
 {
-"user_id" : "user_id",
+"user_id" : int,
 "content" : "일기 텍스트 값"
 }
 ```
 
-*user_id = 1 로 해서 테스트
+\*user_id = 1 로 해서 테스트
 
-response: 
+response:
 
 성공 - HTTP 코드: 201
 
-error - HTTP 코드: 500 
+```json
+{
+  "diaryMessage": "일기 저장 완료",
+  "diay_id": int
+
+}
+```
+
+**05.18** `diary_id` 전달 추가.
+전달받은 `diary_id`는 시,문구 생성과 시 저장에서 다시 보내주세요.
+
+error - HTTP 코드: 500
 
 ### 시, 문구 생성 API
 
-*시연을 위해 단순히 더미데이터를 반환하도록 했습니다.
+\*시연을 위해 단순히 더미데이터를 반환하도록 했습니다.
 
 경로: api/today/poemphrase
 
@@ -274,23 +287,55 @@ request:
 
 ```json
 {
-"content" : "일기 텍스트 값"
+"content" : "일기 텍스트 값",
+"diary_id" : int
 }
 ```
 
+**05.18** `diary_id` 요청 추가. 일기->DB API의 `diary_id`값.
+
 response:
 
-성공 
+성공
 
 ```json
 {
 "poem" :  "봄비는 \n 간질이는 손가락을 갖고 있나? \n 대지가 풋사랑에 빠진 것 같다 ",
-"phrase" : "설레는 당신의 순간을 함께 응원할게요."
+"phrase" : "설레는 당신의 순간을 함께 응원할게요.",
+"emotion_id" : int
 }
 ```
 
-error - 
+**05.18** `emotion_id` 전달 추가. 전달받은 `emotion_id`는 이후에 시 저장에 다시 보내주세요.
 
-status(400) : 데이터베이스 오류
+error -
 
-status(500) : 서버 오류
+HTTP 코드 400 : 데이터베이스 오류
+
+HTTP 코드 500 : 서버 오류
+
+### 시 저장 API
+
+경로: api/today/poems
+
+메서드: POST
+
+request:
+
+```json
+{
+  "diary_id":int,
+  "emotion_id":int,
+  "poem": "시 텍스트 값"
+}
+```
+
+`diary_id`: 일기->DB API response의 `diary_id`
+`emotion_id`: 시,문구 생성 API response의 `emotion_id`
+`poem`: 시, 문구 생성 API response의 `poem`
+
+response:
+성공 - HTTP 코드: 201
+
+error -
+HTTP 코드 500
