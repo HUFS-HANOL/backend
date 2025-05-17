@@ -330,8 +330,8 @@ request:
 }
 ```
 
-`diary_id`: 일기->DB API response의 `diary_id`
-`emotion_id`: 시,문구 생성 API response의 `emotion_id`
+`diary_id`: 일기->DB API response의 `diary_id`<br>
+`emotion_id`: 시,문구 생성 API response의 `emotion_id`<br>
 `poem`: 시, 문구 생성 API response의 `poem`
 
 response:
