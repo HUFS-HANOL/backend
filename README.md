@@ -55,14 +55,14 @@
 
 ```json
 {
-  "userId": "123",
-  "date": "2025-04-10",
-  "like": true
+  "poemId": 1,
+  "liked": true
 }
+
 ```
 
-- `like`: `true` ➡️ 좋아요
-- `like`: `false` ➡️ 좋아요 취소
+- 'liked': `true` ➡️ 좋아요
+- 'liked': `false` ➡️ 좋아요 취소
 
 #### 응답
 

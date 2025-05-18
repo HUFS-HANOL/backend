@@ -3,12 +3,14 @@ const app = express();
 
 app.use(express.json());
 
+// calendar 관련 라우트
 const calendarRoutes = require('./routes/calendar');
 const emotionRoutes = require('./routes/emotion');
 const poemRoutes = require('./routes/poem');
 
-app.use('/calendar', calendarRoutes);
-app.use('/emotion', emotionRoutes);
-app.use('/poem', poemRoutes);
+// ✅ 각각의 세부 라우트 등록
+app.use('/calendar', calendarRoutes);               // GET /calendar/emotion, /calendar/overview 등
+app.use('/calendar/emotion', emotionRoutes);        // POST /calendar/emotion, GET /calendar/emotion/stats
+app.use('/calendar/poem', poemRoutes);              // POST /calendar/poem/like
 
-app.listen(3000, () => console.log('서버 실행 중 (3000번 포트)'));
+module.exports = app;

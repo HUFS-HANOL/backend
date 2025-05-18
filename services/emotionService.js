@@ -1,13 +1,16 @@
 const pool = require('../db');
 
-exports.saveEmotion = async (userId, date, emotion) => {
+exports.saveEmotion = async (diaryId, emotionType, emotionScore, createdAt) => {
     const conn = await pool.getConnection();
     try {
         await conn.query(
-            `INSERT INTO emotions (user_id, date, emotion_type) 
-       VALUES (?, ?, ?)
-       ON DUPLICATE KEY UPDATE emotion_type = VALUES(emotion_type)`,
-            [userId, date, emotion]
+            `INSERT INTO emotions (diary_id, emotion_type, emotion_score, created_at)
+             VALUES (?, ?, ?, ?)
+             ON DUPLICATE KEY UPDATE
+                emotion_type = VALUES(emotion_type),
+                emotion_score = VALUES(emotion_score),
+                created_at = VALUES(created_at)`,
+            [diaryId, emotionType, emotionScore, createdAt]
         );
     } finally {
         conn.release();
@@ -18,10 +21,11 @@ exports.getEmotionStats = async (userId, month) => {
     const conn = await pool.getConnection();
     try {
         const [rows] = await conn.query(
-            `SELECT emotion_type, COUNT(*) AS count
-       FROM emotions
-       WHERE user_id = ? AND DATE_FORMAT(date, '%Y-%m') = ?
-       GROUP BY emotion_type`,
+            `SELECT e.emotion_type, COUNT(*) AS count
+             FROM emotions e
+             JOIN diaries d ON e.diary_id = d.id
+             WHERE d.user_id = ? AND DATE_FORMAT(e.created_at, '%Y-%m') = ?
+             GROUP BY e.emotion_type`,
             [userId, month]
         );
 
