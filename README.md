@@ -238,8 +238,8 @@ backend
 
 ## today 명세서
 
-상위 경로: api/today
-**05.18** diary_id,emotion_id 관련 추가
+상위 경로: api/today<br>
+**05.18** diary_id,emotion_id 관련 추가, 시 저장 API 추가
 
 ### 일기->DB API
 
