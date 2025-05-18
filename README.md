@@ -16,16 +16,12 @@
 
 ```json
 [
-  {
-    "date": "2025-04-01",
-    "emotion": "행복",
-    "liked": true
-  },
-  {
-    "date": "2025-04-02",
-    "emotion": "피곤함",
-    "liked": false
-  }
+ {
+  "date": "2025-04-01",
+  "emotion": "행복",
+  "liked": true,
+  "hasPoem": true
+}
 ]
 ```
 

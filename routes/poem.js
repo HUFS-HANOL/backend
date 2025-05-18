@@ -6,3 +6,5 @@ const poemController = require('../controllers/poemController');
 router.post('/like', poemController.likeOrUnlikePoem);
 
 module.exports = router;
+
+router.post('/', poemController.savePoem);  // 시 저장 API 추가
