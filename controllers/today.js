@@ -11,8 +11,7 @@ exports.todayDiaryDb = async(req, res) => {
                 return res.status(500).json({ diaryMessage: "서버가 요청을 처리할 수 없습니다. 나중에 다시 시도해주세요." });
             } 
             res.status(201).json({
-                diaryMessage: "일기 저장 완료",
-            diary_id: result.insertId});
+                diaryMessage: "일기 저장 완료", diaryId: result.insertId});
             console.log("일기 데이터베이스 저장 완료");
         });
     } catch (err) {
