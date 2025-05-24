@@ -18,6 +18,7 @@ app.use(cors());
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/today",todayRoutes);
+app.use("/api/likedPoems",likedPoemsRoutes);
 
 // 서버 연결
 app.listen(PORT, () => {
