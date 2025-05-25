@@ -10,10 +10,10 @@ exports.likedPoemsView = (req, res) => {
        JOIN poems ON diaries.id = poems.diary_id
        WHERE users.id = ?
        AND poems.liked = 1`
-  db.query(sql, [user_id], (err, rows) => {
+  db.query(sql, [user_id], (err, result) => {
     if (err) {
       return res.status(500).json({ likedPoemsMessage: "서버가 요청을 처리할 수 없습니다. 나중에 다시 시도해주세요." });
     }
-    res.json(rows);
+    res.json({poems: result});
   });
 };

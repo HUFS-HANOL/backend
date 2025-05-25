@@ -339,3 +339,37 @@ response:
 
 error -
 HTTP 코드 500
+
+## likedPoems 명세서
+
+상위 경로: api/likedPoems
+
+### 찜한 시 조회 API
+
+경로: api/likedPoems/view
+
+메서드: GET
+
+request:
+
+- Query Param <br>
+  `user_id` : 사용자 ID
+
+response: <br>
+`poem_text` : 사용자가 찜한 시 내용<br>
+`created_at`: 찜한 시가 생성된 시간
+
+```json
+{
+  "poems": [
+    {
+      "poem_text": "봄비는 \n 간질이는 손가락을 갖고 있나? \n 대지가 풋사랑에 빠진 것 같다",
+      "created_at": "2025-05-17T11:43:54.000Z"
+    },
+    {
+      "poem_text": "today_1 시 저장",
+      "created_at": "2025-05-17T11:53:52.000Z"
+    }
+  ]
+}
+```
