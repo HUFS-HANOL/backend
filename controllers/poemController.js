@@ -1,6 +1,6 @@
 const poemService = require('../services/poemService');
 
-// 시 저장: diaryId, poemText를 받아서 저장
+// 시 저장
 exports.savePoem = async (req, res) => {
     const { diaryId, poemText } = req.body;
     try {
@@ -12,9 +12,12 @@ exports.savePoem = async (req, res) => {
     }
 };
 
-// 시 좋아요/취소: poemId, liked 상태를 받아서 업데이트
+// 시 좋아요/취소
 exports.likePoem = async (req, res) => {
-    const { poemId, liked } = req.body;
+    const { poemId, liked } = req.body; // userId, date는 필요없음
+    if (!poemId) {
+        return res.status(400).json({ error: 'poemId가 필요합니다.' });
+    }
     try {
         await poemService.likePoem(poemId, liked);
         res.json({ message: '좋아요가 반영되었습니다.' });

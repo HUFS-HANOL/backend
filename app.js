@@ -9,8 +9,8 @@ const emotionRoutes = require('./routes/emotion');
 const poemRoutes = require('./routes/poem');
 
 // ✅ 각각의 세부 라우트 등록
-app.use('/calendar', calendarRoutes);               // GET /calendar/emotion, /calendar/overview 등
-app.use('/calendar/emotion', emotionRoutes);        // POST /calendar/emotion, GET /calendar/emotion/stats
-app.use('/calendar/poem', poemRoutes);              // POST /calendar/poem/like
+app.use('/calendar', calendarRoutes);               // GET /calendar/overview
+app.use('/emotion', emotionRoutes);                 // POST /emotion, GET /emotion/stats
+app.use('/poem', poemRoutes);                       // POST /poem/like
 
 module.exports = app;

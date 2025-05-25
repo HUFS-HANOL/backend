@@ -43,3 +43,50 @@ exports.getCalendarEmotion = async (userId, month) => {
         conn.release();
     }
 };
+
+exports.saveEmotion = async ({ diaryId, emotionType, emotionScore }) => {
+    const conn = await pool.getConnection();
+    try {
+        await conn.beginTransaction();
+
+        // 1) diaryId가 실제로 존재하는지 확인
+        const [diaries] = await conn.query(
+            `SELECT id FROM diaries WHERE id = ?`,
+            [diaryId]
+        );
+
+        if (diaries.length === 0) {
+            throw new Error('해당 다이어리가 존재하지 않습니다.');
+        }
+
+        // 2) emotions 테이블에 기존 감정 기록이 있는지 확인
+        const [exists] = await conn.query(
+            `SELECT id FROM emotions WHERE diary_id = ?`,
+            [diaryId]
+        );
+
+        if (exists.length > 0) {
+            // 이미 감정이 있으면 update
+            await conn.query(
+                `UPDATE emotions 
+                 SET emotion_type = ?, emotion_score = ?
+                 WHERE diary_id = ?`,
+                [emotionType, emotionScore, diaryId]
+            );
+        } else {
+            // 없으면 insert
+            await conn.query(
+                `INSERT INTO emotions (diary_id, emotion_type, emotion_score, created_at)
+                 VALUES (?, ?, ?, NOW())`,
+                [diaryId, emotionType, emotionScore]
+            );
+        }
+
+        await conn.commit();
+    } catch (err) {
+        await conn.rollback();
+        throw err;
+    } finally {
+        conn.release();
+    }
+};

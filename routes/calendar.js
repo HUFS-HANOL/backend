@@ -8,4 +8,7 @@ router.get('/overview', calendarController.getCalendarOverview);
 // 월별 감정 캘린더 조회
 router.get('/emotion', calendarController.getCalendarEmotion);
 
+// 감정 상태 저장 (POST /calendar/emotion)
+router.post('/emotion', calendarController.saveEmotion);
+
 module.exports = router;
