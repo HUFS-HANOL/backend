@@ -7,10 +7,12 @@ app.use(express.json());
 const calendarRoutes = require('./routes/calendar');
 const emotionRoutes = require('./routes/emotion');
 const poemRoutes = require('./routes/poem');
-
+// 통계 관련
+const statisticsRoutes = require('./routes/statistics');
 // ✅ 각각의 세부 라우트 등록
 app.use('/calendar', calendarRoutes);               // GET /calendar/overview
 app.use('/emotion', emotionRoutes);                 // POST /emotion, GET /emotion/stats
 app.use('/poem', poemRoutes);                       // POST /poem/like
+app.use('/statistics', statisticsRoutes);
 
 module.exports = app;
