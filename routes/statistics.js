@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const statisticsController = require('../controllers/statisticsController');
+const authMiddleware = require('../middlewares/authMiddleware'); // ✅ 인증 미들웨어 가져오기
 
-// 인증 미들웨어 없이 바로 컨트롤러 함수 연결
-router.get('/summary', statisticsController.getEmotionSummary);
-router.get('/monthly', statisticsController.getMonthlyEmotionStats);
-router.get('/count', statisticsController.getTotalEmotionCount);
+router.get('/summary', authMiddleware, statisticsController.getEmotionSummary);
+router.get('/monthly', authMiddleware, statisticsController.getMonthlyEmotionStats);
+router.get('/count', authMiddleware, statisticsController.getTotalEmotionCount);
+router.get('/yearly-happiness', authMiddleware, statisticsController.getYearlyHappinessStats);
 
 module.exports = router;

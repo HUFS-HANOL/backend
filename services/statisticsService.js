@@ -69,3 +69,36 @@ exports.getTotalEmotionCount = async (userId) => {
     }))
   };
 };
+
+exports.getYearlyHappinessStats = async (userId) => {
+  const happyEmotions = ['기쁨', '행복함', '즐거움'];  // 행복 관련 감정들
+
+  const placeholders = happyEmotions.map(() => '?').join(','); // '?,?,?'
+  const params = [userId, ...happyEmotions];
+
+  const [rows] = await db.execute(`
+    SELECT 
+      MONTH(emotions.created_at) AS month,
+      COUNT(*) AS count
+    FROM emotions
+    JOIN diaries ON emotions.diary_id = diaries.id
+    WHERE diaries.user_id = ?
+      AND YEAR(emotions.created_at) = YEAR(CURRENT_DATE())
+      AND emotions.emotion_type IN (${placeholders})
+    GROUP BY MONTH(emotions.created_at)
+    ORDER BY month
+  `, params);
+
+  // 1~12월 모두 포함시키기 위해 없는 월은 0으로 채우기
+  const monthlyCounts = [];
+  for (let m = 1; m <= 12; m++) {
+    const found = rows.find(row => row.month === m);
+    monthlyCounts.push({ month: m, count: found ? found.count : 0 });
+  }
+
+  return {
+    year: new Date().getFullYear(),
+    emotions: happyEmotions,
+    monthlyCounts
+  };
+};
