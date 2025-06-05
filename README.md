@@ -36,12 +36,16 @@ backend
 ├─controllers //controllers 모듈
 │      auth.js // 로그인, 회원가입, 인증 controllers
 │      devLogin.js // 개발자용 로그인 controllers
+│      likedPoems.js // 찜한 시 controllers
+│      today.js // 오늘 일기 controllers
 │
 ├─models //database 관련
 │      database.js //데이터베이스 연동
 │
 └─routes //라우팅 경로
-        authRoutes.js // auth 라우팅
+│        authRoutes.js // auth 라우팅
+│        likedPoemsRoutes.js // 찜한 시 라우팅
+│        todayRoutes.js // 오늘 일기 라우팅
 ```
 
 ## auth 명세서
@@ -240,6 +244,11 @@ backend
 
 상위 경로: api/today<br>
 **05.18** diary_id,emotion_id 관련 추가, 시 저장 API 추가
+**06.06**
+
+- 일기-> DB API: emotion_type 요청 추가
+- 시, 문구 생성 API: emotion_type 요청 추가
+- 시 저장 API:
 
 ### 일기->DB API
 

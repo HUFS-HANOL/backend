@@ -78,7 +78,7 @@ async function todayEmotion(diary_id,emotion_type) {
 
 // 시 데이터베이스 전송
 exports.todayPoemDb = async(req, res) => {
-    const { diary_id, poem, emotion_id} = req.body;
+    const { diary_id, emotion_id, poem} = req.body;
     if(!diary_id){
         return res.status(400).json({diaryMessage:"일기를 저장해주세요."});
     }
