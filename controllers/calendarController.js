@@ -32,3 +32,25 @@ exports.saveEmotion = async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 };
+
+
+exports.getDiaryDetailByDate = async (req, res) => {
+    const { userId, date } = req.query;
+
+    if (!userId || !date) {
+        return res.status(400).json({ message: 'userId와 date가 필요합니다.' });
+    }
+
+    try {
+        const result = await calendarService.getDiaryEmotionPoemByDate(userId, date);
+
+        if (!result) {
+            return res.status(404).json({ message: '해당 날짜에 일기 데이터가 없습니다.' });
+        }
+
+        res.json(result);
+    } catch (err) {
+        console.error('Error in getDiaryDetailByDate:', err);
+        res.status(500).json({ message: '서버 에러' });
+    }
+};
