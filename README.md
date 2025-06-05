@@ -243,12 +243,13 @@ backend
 ## today 명세서
 
 상위 경로: api/today<br>
-**05.18** diary_id,emotion_id 관련 추가, 시 저장 API 추가
+**05.18** `diary_id`,`emotion_id` 관련 추가, 시 저장 API 추가 <br>
 **06.06**
 
-- 일기-> DB API: emotion_type 요청 추가
-- 시, 문구 생성 API: emotion_type 요청 추가
-- 시 저장 API:
+- 일기-> DB API: `emotion_type` 요청 추가
+- 시, 문구 생성 API: `emotion_type` 요청 추가
+- 시 저장 API: `poem_id` 응답 추가
+- 시 좋아요 API 추가
 
 ### 일기->DB API
 
@@ -261,11 +262,12 @@ request:
 ```json
 {
 "user_id" : int,
-"content" : "일기 텍스트 값"
+"content" : "일기 텍스트 값",
+"emotion_type":"감정 유형(보통,기쁨 등)"
 }
 ```
 
-\*user_id = 1 로 해서 테스트
+**06.06** `emotion_type` 추가, 사용자가 선택한 감정
 
 response:
 
@@ -274,8 +276,7 @@ response:
 ```json
 {
   "diaryMessage": "일기 저장 완료",
-  "diay_id": int
-
+  "diary_id": int
 }
 ```
 
@@ -297,11 +298,13 @@ request:
 ```json
 {
 "content" : "일기 텍스트 값",
-"diary_id" : int
+"diary_id" : int,
+"emotion_type":"감정 유형(보통,기쁨 등)"
 }
 ```
 
-**05.18** `diary_id` 요청 추가. 일기->DB API의 `diary_id`값.
+**05.18** `diary_id` 요청 추가. 일기->DB API의 `diary_id`값.<br>
+**06.06** `emotion_type` 추가, 사용자가 선택한 감정.
 
 response:
 
@@ -343,11 +346,42 @@ request:
 `emotion_id`: 시,문구 생성 API response의 `emotion_id`<br>
 `poem`: 시, 문구 생성 API response의 `poem`
 
-response:
-성공 - HTTP 코드: 201
+response: <br>
+성공 <br>
+HTTP 코드: 201 <br>
+**06.06**
+
+```json
+{
+  "diaryMessage":"시 저장 완료.",
+  "poem_id":int
+}
+```
+
+`poem_id`: 저장된 시의 id, 시 좋아요 API 요청에서 요구함.
 
 error -
 HTTP 코드 500
+
+### 시 좋아요 API
+
+request:
+
+```json
+{
+  "poem_id":int,
+  "liked":0 or 1
+}
+```
+
+`poem_id`: 시 저장 API에서 응답 받은 poem_id <br>
+`liked`: 좋아요 -> 1, 좋아요 취소 -> 0
+
+response:
+
+성공 - HTTP 코드: 201
+
+에러 - HTTP 코드: 500
 
 ## likedPoems 명세서
 
