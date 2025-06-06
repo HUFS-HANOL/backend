@@ -222,6 +222,76 @@
 
 ---
 
+### `GET /statistics/yearly-happiness`
+
+#### 설명  
+전체 감정중 행복도를 표시합니다.
+
+#### 응답 예시
+
+```json
+{
+    "year": 2025,
+    "emotions": [
+        "기쁨",
+        "행복함",
+        "즐거움"
+    ],
+    "monthlyCounts": [
+        {
+            "month": 1,
+            "count": 0
+        },
+        {
+            "month": 2,
+            "count": 0
+        },
+        {
+            "month": 3,
+            "count": 0
+        },
+        {
+            "month": 4,
+            "count": 0
+        },
+        {
+            "month": 5,
+            "count": 12
+        },
+        {
+            "month": 6,
+            "count": 7
+        },
+        {
+            "month": 7,
+            "count": 0
+        },
+        {
+            "month": 8,
+            "count": 0
+        },
+        {
+            "month": 9,
+            "count": 0
+        },
+        {
+            "month": 10,
+            "count": 0
+        },
+        {
+            "month": 11,
+            "count": 0
+        },
+        {
+            "month": 12,
+            "count": 0
+        }
+    ]
+}
+```
+
+---
+
 ## 📝 참고 사항
 
 - 날짜 형식은 `YYYY-MM-DD` 또는 `YYYY-MM`을 사용합니다.
