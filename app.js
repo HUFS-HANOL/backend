@@ -1,18 +1,29 @@
 const express = require('express');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+
 const app = express();
 
-app.use(express.json());
+// ✅ CORS 설정 
+app.use(cors({
+    origin: 'http://localhost:5173', // 
+    credentials: true
+}));
 
-// calendar 관련 라우트
+// ✅ JSON, 쿠키 파서
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+// ✅ 라우터 등록
 const calendarRoutes = require('./routes/calendar');
 const emotionRoutes = require('./routes/emotion');
 const poemRoutes = require('./routes/poem');
-// 통계 관련
 const statisticsRoutes = require('./routes/statistics');
-// ✅ 각각의 세부 라우트 등록
-app.use('/calendar', calendarRoutes);               // GET /calendar/overview
-app.use('/emotion', emotionRoutes);                 // POST /emotion, GET /emotion/stats
-app.use('/poem', poemRoutes);                       // POST /poem/like
+
+app.use('/calendar', calendarRoutes);
+app.use('/emotion', emotionRoutes);
+app.use('/poem', poemRoutes);
 app.use('/statistics', statisticsRoutes);
 
 module.exports = app;

@@ -97,33 +97,38 @@ exports.getDiaryEmotionPoemByDate = async (userId, date) => {
     const [diaryRows] = await db.execute(`
     SELECT id, title, content, created_at 
     FROM diaries 
-    WHERE user_id = ? AND DATE(created_at) = ?
-  `, [userId, date]);
+    WHERE user_id = ? AND DATE(created_at) = ?`,
+        [userId, date]
+    );
 
     if (diaryRows.length === 0) return null;
 
-    const diary = diaryRows[0];
+    const results = [];
 
-    const [emotionRows] = await db.execute(`
-    SELECT emotion_type
-    FROM emotions 
-    WHERE diary_id = ?
-  `, [diary.id]);
+    for (const diary of diaryRows) {
+        const [emotionRows] = await db.execute(`
+      SELECT emotion_type
+      FROM emotions
+      WHERE diary_id = ?`,
+            [diary.id]
+        );
 
-    const emotion = emotionRows[0] || null;
+        const [poemRows] = await db.execute(`
+      SELECT poem_text, liked, created_at
+      FROM poems
+      WHERE diary_id = ?`,
+            [diary.id]
+        );
 
-    const [poemRows] = await db.execute(`
-    SELECT poem_text, created_at 
-    FROM poems 
-    WHERE diary_id = ?
-  `, [diary.id]);
-
-    const poem = poemRows[0] || null;
+        results.push({
+            diary,
+            emotion: emotionRows[0] || null,
+            poem: poemRows[0] || null
+        });
+    }
 
     return {
         date,
-        diary,
-        emotion,
-        poem
+        entries: results
     };
 };

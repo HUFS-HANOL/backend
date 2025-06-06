@@ -33,7 +33,6 @@ exports.saveEmotion = async (req, res) => {
     }
 };
 
-
 exports.getDiaryDetailByDate = async (req, res) => {
     const { userId, date } = req.query;
 
