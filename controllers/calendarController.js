@@ -1,5 +1,6 @@
 const calendarService = require('../services/calendarService');
 
+// 📆 월별 캘린더 개요 조회
 exports.getCalendarOverview = async (req, res) => {
     const { userId, month } = req.query;
     try {
@@ -11,6 +12,7 @@ exports.getCalendarOverview = async (req, res) => {
     }
 };
 
+// 📆 월별 감정 캘린더 조회
 exports.getCalendarEmotion = async (req, res) => {
     const { userId, month } = req.query;
     try {
@@ -22,6 +24,7 @@ exports.getCalendarEmotion = async (req, res) => {
     }
 };
 
+// 😊 감정 저장
 exports.saveEmotion = async (req, res) => {
     try {
         const { diaryId, emotionType, emotionScore } = req.body;
@@ -33,6 +36,7 @@ exports.saveEmotion = async (req, res) => {
     }
 };
 
+// 🗓️ 특정 날짜 일기/시 상세 조회
 exports.getDiaryDetailByDate = async (req, res) => {
     const { userId, date } = req.query;
 
@@ -47,13 +51,26 @@ exports.getDiaryDetailByDate = async (req, res) => {
             return res.status(404).json({ message: '해당 날짜에 일기 데이터가 없습니다.' });
         }
 
-        res.json(result);
+        // poem.title이 없는 경우 null로 보정
+        const safeResult = {
+            ...result,
+            poem: result.poem
+                ? {
+                    text: result.poem.text,
+                    created_at: result.poem.created_at,
+                    title: result.poem.title || null, // 🎯 null 보정
+                }
+                : null,
+        };
+
+        res.json(safeResult);
     } catch (err) {
         console.error('Error in getDiaryDetailByDate:', err);
         res.status(500).json({ message: '서버 에러' });
     }
 };
 
+// 📊 월별 감정 통계 조회
 exports.getCalendarEmotionStats = async (req, res) => {
     const { userId, month } = req.query;
 

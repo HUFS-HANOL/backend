@@ -1,6 +1,6 @@
 const pool = require('../db');
 
-exports.saveEmotion = async (diaryId, emotionType, emotionScore, createdAt) => {
+exports.saveEmotion = async (diaryId, emotionType, emotionScore, date) => {
     const conn = await pool.getConnection();
     try {
         await conn.query(
@@ -10,7 +10,7 @@ exports.saveEmotion = async (diaryId, emotionType, emotionScore, createdAt) => {
                 emotion_type = VALUES(emotion_type),
                 emotion_score = VALUES(emotion_score),
                 created_at = VALUES(created_at)`,
-            [diaryId, emotionType, emotionScore, createdAt]
+            [diaryId, emotionType, emotionScore, date]
         );
     } finally {
         conn.release();

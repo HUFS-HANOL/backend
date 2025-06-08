@@ -1,19 +1,20 @@
 const pool = require('../db');
 
+// 📆 월별 일기 개요
 exports.getCalendarOverview = async (userId, month) => {
     const conn = await pool.getConnection();
     try {
         const [rows] = await conn.query(
             `SELECT 
                 d.id AS diaryId,
-                DATE_FORMAT(d.created_at, '%Y-%m-%d') AS date,
+                DATE_FORMAT(d.date, '%Y-%m-%d') AS date,
                 e.emotion_type AS emotion,
                 IF(p.poem_text IS NOT NULL, TRUE, FALSE) AS hasPoem
             FROM diaries d
             LEFT JOIN emotions e ON e.diary_id = d.id
             LEFT JOIN poems p ON p.diary_id = d.id
             WHERE d.user_id = ?
-              AND DATE_FORMAT(d.created_at, '%Y-%m') = ?`,
+              AND DATE_FORMAT(d.date, '%Y-%m') = ?`,
             [userId, month]
         );
         return rows;
@@ -22,12 +23,13 @@ exports.getCalendarOverview = async (userId, month) => {
     }
 };
 
+// 📆 월별 감정 정보
 exports.getCalendarEmotion = async (userId, month) => {
     const conn = await pool.getConnection();
     try {
         const [rows] = await conn.query(
             `SELECT 
-                DATE_FORMAT(d.created_at, '%Y-%m-%d') AS date,
+                DATE_FORMAT(d.date, '%Y-%m-%d') AS date,
                 e.emotion_type AS emotion,
                 IF(p.liked = 1, TRUE, FALSE) AS liked,
                 IF(p.poem_text IS NOT NULL, TRUE, FALSE) AS hasPoem
@@ -35,7 +37,7 @@ exports.getCalendarEmotion = async (userId, month) => {
             LEFT JOIN emotions e ON e.diary_id = d.id
             LEFT JOIN poems p ON p.diary_id = d.id
             WHERE d.user_id = ?
-              AND DATE_FORMAT(d.created_at, '%Y-%m') = ?`,
+              AND DATE_FORMAT(d.date, '%Y-%m') = ?`,
             [userId, month]
         );
         return rows;
@@ -44,12 +46,12 @@ exports.getCalendarEmotion = async (userId, month) => {
     }
 };
 
+// 😊 감정 저장 (삽입 또는 업데이트)
 exports.saveEmotion = async ({ diaryId, emotionType, emotionScore }) => {
     const conn = await pool.getConnection();
     try {
         await conn.beginTransaction();
 
-        // 1) diaryId가 실제로 존재하는지 확인
         const [diaries] = await conn.query(
             `SELECT id FROM diaries WHERE id = ?`,
             [diaryId]
@@ -59,14 +61,12 @@ exports.saveEmotion = async ({ diaryId, emotionType, emotionScore }) => {
             throw new Error('해당 다이어리가 존재하지 않습니다.');
         }
 
-        // 2) emotions 테이블에 기존 감정 기록이 있는지 확인
         const [exists] = await conn.query(
             `SELECT id FROM emotions WHERE diary_id = ?`,
             [diaryId]
         );
 
         if (exists.length > 0) {
-            // 이미 감정이 있으면 update
             await conn.query(
                 `UPDATE emotions 
                  SET emotion_type = ?, emotion_score = ?
@@ -74,7 +74,6 @@ exports.saveEmotion = async ({ diaryId, emotionType, emotionScore }) => {
                 [emotionType, emotionScore, diaryId]
             );
         } else {
-            // 없으면 insert
             await conn.query(
                 `INSERT INTO emotions (diary_id, emotion_type, emotion_score, created_at)
                  VALUES (?, ?, ?, NOW())`,
@@ -91,59 +90,61 @@ exports.saveEmotion = async ({ diaryId, emotionType, emotionScore }) => {
     }
 };
 
-const db = require('../db');
-
+// 📋 특정 날짜의 가장 최근 일기/감정/시 조회
 exports.getDiaryEmotionPoemByDate = async (userId, date) => {
-    const [diaryRows] = await db.execute(`
-    SELECT id, title, content, created_at 
-    FROM diaries 
-    WHERE user_id = ? AND DATE(created_at) = ?`,
-        [userId, date]
-    );
+    const conn = await pool.getConnection();
+    try {
+        const [diaryRows] = await conn.query(
+            `SELECT id, title, content, created_at 
+             FROM diaries 
+             WHERE user_id = ? AND DATE(date) = ?
+             ORDER BY created_at DESC
+             LIMIT 1`,
+            [userId, date]
+        );
 
-    if (diaryRows.length === 0) return null;
+        if (diaryRows.length === 0) return null;
 
-    const results = [];
+        const diary = diaryRows[0];
 
-    for (const diary of diaryRows) {
-        const [emotionRows] = await db.execute(`
-      SELECT emotion_type
-      FROM emotions
-      WHERE diary_id = ?`,
+        const [emotionRows] = await conn.query(
+            `SELECT emotion_type
+             FROM emotions
+             WHERE diary_id = ?`,
             [diary.id]
         );
 
-        const [poemRows] = await db.execute(`
-      SELECT poem_text, liked, created_at
-      FROM poems
-      WHERE diary_id = ?`,
+        const [poemRows] = await conn.query(
+            `SELECT 
+                COALESCE(title, '') AS title,
+                poem_text, liked, created_at
+             FROM poems
+             WHERE diary_id = ?`,
             [diary.id]
         );
 
-        results.push({
+        return {
+            date,
             diary,
             emotion: emotionRows[0] || null,
             poem: poemRows[0] || null
-        });
+        };
+    } finally {
+        conn.release();
     }
-
-    return {
-        date,
-        entries: results
-    };
 };
 
-
+// 📊 감정 통계
 exports.getEmotionStats = async (userId, month) => {
     const conn = await pool.getConnection();
     try {
         const [rows] = await conn.query(
             `SELECT e.emotion_type, COUNT(*) AS count
-       FROM diaries d
-       JOIN emotions e ON d.id = e.diary_id
-       WHERE d.user_id = ?
-         AND DATE_FORMAT(d.created_at, '%Y-%m') = ?
-       GROUP BY e.emotion_type`,
+             FROM diaries d
+             JOIN emotions e ON d.id = e.diary_id
+             WHERE d.user_id = ?
+               AND DATE_FORMAT(d.date, '%Y-%m') = ?
+             GROUP BY e.emotion_type`,
             [userId, month]
         );
 
