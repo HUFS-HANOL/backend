@@ -21,9 +21,9 @@ const emotionRoutes = require('./routes/emotion');
 const poemRoutes = require('./routes/poem');
 const statisticsRoutes = require('./routes/statistics');
 
-app.use('/calendar', calendarRoutes);
-app.use('/emotion', emotionRoutes);
-app.use('/poem', poemRoutes);
-app.use('/statistics', statisticsRoutes);
+app.use('/api/calendar', calendarRoutes);
+app.use('/api/emotion', emotionRoutes);
+app.use('/api/poem', poemRoutes);
+app.use('/api/statistics', statisticsRoutes);
 
 module.exports = app;

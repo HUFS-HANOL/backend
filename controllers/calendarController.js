@@ -53,3 +53,19 @@ exports.getDiaryDetailByDate = async (req, res) => {
         res.status(500).json({ message: '서버 에러' });
     }
 };
+
+exports.getCalendarEmotionStats = async (req, res) => {
+    const { userId, month } = req.query;
+
+    if (!userId || !month) {
+        return res.status(400).json({ message: 'userId와 month가 필요합니다.' });
+    }
+
+    try {
+        const stats = await calendarService.getEmotionStats(userId, month);
+        res.json(stats); // 예: { "기쁨": 5, "슬픔": 3 }
+    } catch (err) {
+        console.error('Error in getCalendarEmotionStats:', err);
+        res.status(500).json({ message: '서버 오류' });
+    }
+};
