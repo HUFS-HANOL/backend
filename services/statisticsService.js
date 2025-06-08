@@ -11,9 +11,7 @@ exports.getMostUsedEmotion = async (userId) => {
     LIMIT 1
   `, [userId]);
 
-  if (rows.length === 0) {
-    return null;
-  }
+  if (rows.length === 0) return null;
 
   return {
     name: rows[0].emotion_type,
@@ -29,8 +27,8 @@ exports.getMonthlyEmotionStats = async (userId) => {
     FROM emotions
     JOIN diaries ON emotions.diary_id = diaries.id
     WHERE diaries.user_id = ?
-      AND MONTH(emotions.created_at) = MONTH(CURRENT_DATE())
-      AND YEAR(emotions.created_at) = YEAR(CURRENT_DATE())
+      AND MONTH(diaries.date) = MONTH(CURRENT_DATE())
+      AND YEAR(diaries.date) = YEAR(CURRENT_DATE())
     GROUP BY emotions.emotion_type
   `, [userId]);
 
@@ -71,25 +69,24 @@ exports.getTotalEmotionCount = async (userId) => {
 };
 
 exports.getYearlyHappinessStats = async (userId) => {
-  const happyEmotions = ['기쁨', '행복함', '즐거움'];  // 행복 관련 감정들
+  const happyEmotions = ['기쁨', '행복함', '즐거움'];
 
-  const placeholders = happyEmotions.map(() => '?').join(','); // '?,?,?'
+  const placeholders = happyEmotions.map(() => '?').join(',');
   const params = [userId, ...happyEmotions];
 
   const [rows] = await db.execute(`
     SELECT 
-      MONTH(emotions.created_at) AS month,
+      MONTH(diaries.date) AS month,
       COUNT(*) AS count
     FROM emotions
     JOIN diaries ON emotions.diary_id = diaries.id
     WHERE diaries.user_id = ?
-      AND YEAR(emotions.created_at) = YEAR(CURRENT_DATE())
+      AND YEAR(diaries.date) = YEAR(CURRENT_DATE())
       AND emotions.emotion_type IN (${placeholders})
-    GROUP BY MONTH(emotions.created_at)
+    GROUP BY MONTH(diaries.date)
     ORDER BY month
   `, params);
 
-  // 1~12월 모두 포함시키기 위해 없는 월은 0으로 채우기
   const monthlyCounts = [];
   for (let m = 1; m <= 12; m++) {
     const found = rows.find(row => row.month === m);
