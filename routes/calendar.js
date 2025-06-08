@@ -13,7 +13,4 @@ router.post('/emotion', calendarController.saveEmotion);
 
 router.get('/detail', calendarController.getDiaryDetailByDate);
 
-// 감정 통계 라우터 추가
-router.get('/emotions/stats', calendarController.getCalendarEmotionStats);
-
 module.exports = router;

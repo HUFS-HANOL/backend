@@ -416,7 +416,6 @@ response: <br>
   ]
 }
 ```
-
 # 감정 캘린더 API 명세서
 
 감정 기록 및 AI 시 좋아요 기능이 있는 감정 캘린더 API입니다. 이 문서는 API 요청 방식과 응답 예시를 정리한 명세서입니다.
@@ -564,8 +563,7 @@ response: <br>
 
 ### `GET /statistics/summary`
 
-#### 설명
-
+#### 설명  
 사용자의 전체 감정 중 가장 많이 사용된 감정을 조회합니다.
 
 #### 응답 예시
@@ -583,8 +581,7 @@ response: <br>
 
 ### `GET /statistics/monthly`
 
-#### 설명
-
+#### 설명  
 해당 월에 사용된 감정들의 통계(개수 및 비율)를 제공합니다.
 
 #### 응답 예시
@@ -617,8 +614,7 @@ response: <br>
 
 ### `GET /statistics/count`
 
-#### 설명
-
+#### 설명  
 전체 감정 기록에서 감정별 누적 횟수를 제공합니다.
 
 #### 응답 예시
@@ -646,66 +642,69 @@ response: <br>
 
 ### `GET /statistics/yearly-happiness`
 
-#### 설명
-
+#### 설명  
 전체 감정중 행복도를 표시합니다.
 
 #### 응답 예시
 
 ```json
 {
-  "year": 2025,
-  "emotions": ["기쁨", "행복함", "즐거움"],
-  "monthlyCounts": [
-    {
-      "month": 1,
-      "count": 0
-    },
-    {
-      "month": 2,
-      "count": 0
-    },
-    {
-      "month": 3,
-      "count": 0
-    },
-    {
-      "month": 4,
-      "count": 0
-    },
-    {
-      "month": 5,
-      "count": 12
-    },
-    {
-      "month": 6,
-      "count": 7
-    },
-    {
-      "month": 7,
-      "count": 0
-    },
-    {
-      "month": 8,
-      "count": 0
-    },
-    {
-      "month": 9,
-      "count": 0
-    },
-    {
-      "month": 10,
-      "count": 0
-    },
-    {
-      "month": 11,
-      "count": 0
-    },
-    {
-      "month": 12,
-      "count": 0
-    }
-  ]
+    "year": 2025,
+    "emotions": [
+        "기쁨",
+        "행복함",
+        "즐거움"
+    ],
+    "monthlyCounts": [
+        {
+            "month": 1,
+            "count": 0
+        },
+        {
+            "month": 2,
+            "count": 0
+        },
+        {
+            "month": 3,
+            "count": 0
+        },
+        {
+            "month": 4,
+            "count": 0
+        },
+        {
+            "month": 5,
+            "count": 12
+        },
+        {
+            "month": 6,
+            "count": 7
+        },
+        {
+            "month": 7,
+            "count": 0
+        },
+        {
+            "month": 8,
+            "count": 0
+        },
+        {
+            "month": 9,
+            "count": 0
+        },
+        {
+            "month": 10,
+            "count": 0
+        },
+        {
+            "month": 11,
+            "count": 0
+        },
+        {
+            "month": 12,
+            "count": 0
+        }
+    ]
 }
 ```
 

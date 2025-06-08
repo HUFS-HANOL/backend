@@ -132,28 +132,3 @@ exports.getDiaryEmotionPoemByDate = async (userId, date) => {
         entries: results
     };
 };
-
-
-exports.getEmotionStats = async (userId, month) => {
-    const conn = await pool.getConnection();
-    try {
-        const [rows] = await conn.query(
-            `SELECT e.emotion_type, COUNT(*) AS count
-       FROM diaries d
-       JOIN emotions e ON d.id = e.diary_id
-       WHERE d.user_id = ?
-         AND DATE_FORMAT(d.created_at, '%Y-%m') = ?
-       GROUP BY e.emotion_type`,
-            [userId, month]
-        );
-
-        const result = {};
-        for (const row of rows) {
-            result[row.emotion_type] = row.count;
-        }
-
-        return result;
-    } finally {
-        conn.release();
-    }
-};
