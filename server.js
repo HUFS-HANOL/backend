@@ -1,3 +1,4 @@
+
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const path = require("path");
@@ -20,4 +21,6 @@ app.use("/auth", authRoutes);
 // 서버 연결
 app.listen(PORT, () => {
     console.log(`서버 실행 http://localhost:${PORT}`);
-});
+  
+// server.js
+const app = require('./app');
