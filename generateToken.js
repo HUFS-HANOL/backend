@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 const token = jwt.sign(
     { id: 1, name: '테스트유저' },
-    process.env.JWT_SECRET, // 👈 'hufshanol'이 들어감
+    process.env.ACCESS_SECRETKEY, // 👈 'hufshanol'이 들어감
     { expiresIn: '1h' }
 );
 
