@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input {
+            margin: 5px 0;
+            padding: 10px;
+            width: 300px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px 0;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Authentication Test</h1>
+
+    <section>
+        <h2>1. Login</h2>
+        <input type="text" id="identifier" placeholder="Username or Email">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+    </section>
+
+    <section>
+        <h2>2. Access Protected Route</h2>
+        <button onclick="accessProtected()">Access Protected Resource</button>
+    </section>
+
+    <section>
+        <h2>3. Refresh Token</h2>
+        <button onclick="refreshToken()">Refresh Token</button>
+    </section>
+
+    <div class="output" id="output"></div>
+
+    <script>
+        let accessToken = "";
+
+        async function login() {
+            const identifier = document.getElementById("identifier").value;
+            const password = document.getElementById("password").value;
+
+            try {
+                const response = await fetch('/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ identifier, password })
+                });
+
+                const data = await response.json();
+                document.getElementById("output").innerText = JSON.stringify(data, null, 2);
+
+                if (response.ok) {
+                    accessToken = data.accessToken;
+                    console.log("Access Token stored:", accessToken);
+                }
+            } catch (error) {
+                console.error("Login failed:", error);
+                document.getElementById("output").innerText = "Login failed: " + error.message;
+            }
+        }
+
+        async function accessProtected() {
+            if (!accessToken) {
+                alert("Please login first!");
+                return;
+            }
+
+            try {
+                const response = await fetch('/protected-route', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                    }
+                });
+
+                const data = await response.json();
+                document.getElementById("output").innerText = JSON.stringify(data, null, 2);
+            } catch (error) {
+                console.error("Access failed:", error);
+                document.getElementById("output").innerText = "Access failed: " + error.message;
+            }
+        }
+
+        async function refreshToken() {
+            try {
+                const response = await fetch('/auth/token', {
+                    method: 'POST',
+                    credentials: 'include' // Include cookies in the request
+                });
+
+                const data = await response.json();
+                document.getElementById("output").innerText = JSON.stringify(data, null, 2);
+
+                if (response.ok) {
+                    accessToken = data.accessToken;
+                    console.log("Access Token refreshed:", accessToken);
+                }
+            } catch (error) {
+                console.error("Token refresh failed:", error);
+                document.getElementById("output").innerText = "Token refresh failed: " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
