@@ -408,6 +408,7 @@ response:
 상위 경로: api/likedPoems
 
 ### 찜한 시 조회 API
+**06.09** `date` 응답 추가, `created_at`응답 제거
 
 경로: api/likedPoems/view
 
@@ -420,22 +421,20 @@ request:
 
 response: <br>
 `poem_text` : 사용자가 찜한 시 내용<br>
-`created_at`: 찜한 시가 생성된 시간
+~~`created_at`: 찜한 시가 생성된 시간~~<br>
+`date`: 시 저장 날짜 (일기 저장시 입력했던 date)
 
 ```json
 {
-  "poems": [
-    {
-      "poem_text": "봄비는 \n 간질이는 손가락을 갖고 있나? \n 대지가 풋사랑에 빠진 것 같다",
-      "created_at": "2025-05-17T11:43:54.000Z"
-    },
-    {
-      "poem_text": "today_1 시 저장",
-      "created_at": "2025-05-17T11:53:52.000Z"
-    }
-  ]
+    "poems": [
+        {
+            "poem_text": "무거운 서류 뭉치처럼\n쌓여가는 피로\n의자에 몸을 맡기고\n한숨이 길어만 간다",
+            "date": "2025-06-06T15:00:00.000Z"
+        }
+    ]
 }
 ```
+
 # 감정 캘린더 API 명세서
 
 감정 기록 및 AI 시 좋아요 기능이 있는 감정 캘린더 API입니다. 이 문서는 API 요청 방식과 응답 예시를 정리한 명세서입니다.
