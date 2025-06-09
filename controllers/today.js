@@ -1,11 +1,17 @@
 const db = require("../models/database");
+const fs = require('fs');
+const path = require('path');
+
+//data 파일
+const dataPath = path.join(__dirname, '../data/generated_poems_ex.json');
+const poemData = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
 
 // 일기 데이터베이스 전송 
 exports.todayDiaryDb = async(req, res) => {
-    const {user_id, content, emotion_type} = req.body;
+    const {user_id, content, emotion_type, date} = req.body;
     try {
-        const sql = "INSERT INTO diaries (user_id, content, emotion_type, created_at) VALUES (?, ?, ?,NOW())";
-        db.query(sql, [user_id, content, emotion_type], (err, result) => {
+        const sql = "INSERT INTO diaries (user_id, content, emotion_type, date, created_at) VALUES (?, ?, ?, ?, NOW())";
+        db.query(sql, [user_id, content, emotion_type, date], (err, result) => {
             if (err) {
                 console.error("데이터 베이스 오류:", err);
                 return res.status(500).json({ diaryMessage: "서버가 요청을 처리할 수 없습니다. 나중에 다시 시도해주세요." });
@@ -29,11 +35,14 @@ exports.todayPoem = async(req,res) => {
     }
     try{
         //시, 문구 생성 반환 함수 실행 후 값 할당
-        const poemText = "봄비는 \n 간질이는 손가락을 갖고 있나? \n 대지가 풋사랑에 빠진 것 같다 "
-        const phraseText = "설레는 당신의 순간을 함께 응원할게요."
+        const poemPhrase = await todayGeneratePoem(content,emotion_type)
+        const poemTitle = poemPhrase.title
+        const poemText = poemPhrase.content
+        const phraseText = "문구 미반영"
         const emotion_id = await todayEmotion(diary_id,emotion_type);
     res.json(
         {
+            title: poemTitle,
             poem: poemText,
             phrase: phraseText,
             emotion_id: emotion_id
@@ -48,8 +57,22 @@ exports.todayPoem = async(req,res) => {
 }
 
 // 시, 문구 생성 반환 함수 
-// 매개변수: 일기 content , 리턴 값: poemtext, pharsetext
-// 파이썬 API를 가져와서 직접 실행할 것인지, API 서버에 보내고 받을 것인지
+// 매개변수: 일기 content, emotion_type , 리턴 값: poemtext, pharsetext, title
+async function todayGeneratePoem(content, emotion_type){
+    try{
+    const found = poemData.find(
+        (item) => item.question === content && item.golden_emotion === emotion_type
+    );
+    if (!found) {
+        console.log('content, emotion_type 데이터 불일치');
+        return {diaryMessage: "시, 문구 생성 오류"};
+    }
+    return {title:found.title, content:found.content};
+}catch(err){
+    console.log('에러:',err);
+    return {diaryMessage:"오류 발생"};
+}
+}
 
 // (감정 생성) = 감정 이미지 반환 함수
 // 매개변수: 감정 값 , 리턴 값: 감정 이미지 url , emotion_id = emotion_id
@@ -78,12 +101,12 @@ async function todayEmotion(diary_id,emotion_type) {
 
 // 시 데이터베이스 전송
 exports.todayPoemDb = async(req, res) => {
-    const { diary_id, emotion_id, poem} = req.body;
+    const { diary_id, emotion_id, title, poem,} = req.body;
     if(!diary_id){
         return res.status(400).json({diaryMessage:"일기를 저장해주세요."});
     }
     try {
-        const sql = "INSERT INTO poems (diary_id, emotion_id, poem_text, created_at) VALUES (?, ?, ?, NOW())";
+        const sql = "INSERT INTO poems (diary_id, emotion_id, title, poem_text, created_at) VALUES (?, ?, ?, ?, NOW())";
         db.query(sql, [diary_id, emotion_id, poem], (err, result) => {
             if (err) {
                 console.error("데이터 베이스 오류:", err);
