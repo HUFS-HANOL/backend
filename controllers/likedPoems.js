@@ -4,7 +4,7 @@ const db = require("../models/database");
 exports.likedPoemsView = (req, res) => {
   const user_id = req.query.user_id;
   const sql = 
-      `SELECT poems.poem_text , poems.created_at
+      `SELECT poems.poem_text , diaries.date
        FROM users
        JOIN diaries ON users.id = diaries.user_id
        JOIN poems ON diaries.id = poems.diary_id
