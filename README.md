@@ -251,6 +251,13 @@ backend
 - 시 저장 API: `poem_id` 응답 추가
 - 시 좋아요 API 추가
 
+**06.09**
+
+- 일기 -> DB API: `date` 요청 추가
+- 시, 문구 생성 API: `title` 응답 추가
+- 시 -> DB API: `title` 요청 추가
+- 주의사항: 시,문구 생성 API에서 content와 emotion_type이 시연 데이터와 일치하지 않는 경우 오류 메세지를 응답함.
+
 ### 일기->DB API
 
 경로: api/today/diaries
@@ -264,10 +271,12 @@ request:
 "user_id" : int,
 "content" : "일기 텍스트 값",
 "emotion_type":"감정 유형(보통,기쁨 등)"
+"date":"2025-01-01(YYYY-MM-DD)"
 }
 ```
 
 **06.06** `emotion_type` 추가, 사용자가 선택한 감정
+**06.09** `date` 요청 추가, YYYY-MM-DD 형식, 캘린더에서 넘어올시 캘린더 날짜, 오늘 일기에서 작성시 오늘 날짜
 
 response:
 
@@ -305,6 +314,7 @@ request:
 
 **05.18** `diary_id` 요청 추가. 일기->DB API의 `diary_id`값.<br>
 **06.06** `emotion_type` 추가, 사용자가 선택한 감정.
+**06.09** `content`와 `emotion_type`은 데이터 파일과 일치하지 않으면 오류 메시지 응답.
 
 response:
 
@@ -312,13 +322,15 @@ response:
 
 ```json
 {
-"poem" :  "봄비는 \n 간질이는 손가락을 갖고 있나? \n 대지가 풋사랑에 빠진 것 같다 ",
-"phrase" : "설레는 당신의 순간을 함께 응원할게요.",
+"title": "시 타이틀",
+"poem" :  "시 텍스트 값",
+"phrase" : "생성된 문구",
 "emotion_id" : int
 }
 ```
 
 **05.18** `emotion_id` 전달 추가. 전달받은 `emotion_id`는 이후에 시 저장에 다시 보내주세요.
+**06.09** `title` 응답 추가, phrase는 "문구 미반영"으로 응답함. 데이터 업데이트시 추후 수정.
 
 error -
 
@@ -338,13 +350,17 @@ request:
 {
   "diary_id":int,
   "emotion_id":int,
+  "title":"시 제목 값",
   "poem": "시 텍스트 값"
 }
 ```
 
 `diary_id`: 일기->DB API response의 `diary_id`<br>
 `emotion_id`: 시,문구 생성 API response의 `emotion_id`<br>
+`title`: 시,문구 생성 API response의 `title` <br>
 `poem`: 시, 문구 생성 API response의 `poem`
+
+**06.09** `title` 요청 추가
 
 response: <br>
 성공 <br>
