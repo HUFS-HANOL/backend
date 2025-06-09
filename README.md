@@ -276,6 +276,7 @@ request:
 ```
 
 **06.06** `emotion_type` 추가, 사용자가 선택한 감정
+
 **06.09** `date` 요청 추가, YYYY-MM-DD 형식, 캘린더에서 넘어올시 캘린더 날짜, 오늘 일기에서 작성시 오늘 날짜
 
 response:
@@ -312,8 +313,10 @@ request:
 }
 ```
 
-**05.18** `diary_id` 요청 추가. 일기->DB API의 `diary_id`값.<br>
+**05.18** `diary_id` 요청 추가. 일기->DB API의 `diary_id`값.
+
 **06.06** `emotion_type` 추가, 사용자가 선택한 감정.
+
 **06.09** `content`와 `emotion_type`은 데이터 파일과 일치하지 않으면 오류 메시지 응답.
 
 response:
@@ -330,6 +333,7 @@ response:
 ```
 
 **05.18** `emotion_id` 전달 추가. 전달받은 `emotion_id`는 이후에 시 저장에 다시 보내주세요.
+
 **06.09** `title` 응답 추가, phrase는 "문구 미반영"으로 응답함. 데이터 업데이트시 추후 수정.
 
 error -
