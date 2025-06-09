@@ -101,13 +101,13 @@ async function todayEmotion(diary_id,emotion_type) {
 
 // 시 데이터베이스 전송
 exports.todayPoemDb = async(req, res) => {
-    const { diary_id, emotion_id, title, poem,} = req.body;
+    const { diary_id, emotion_id, title, poem} = req.body;
     if(!diary_id){
         return res.status(400).json({diaryMessage:"일기를 저장해주세요."});
     }
     try {
         const sql = "INSERT INTO poems (diary_id, emotion_id, title, poem_text, created_at) VALUES (?, ?, ?, ?, NOW())";
-        db.query(sql, [diary_id, emotion_id, poem], (err, result) => {
+        db.query(sql, [diary_id, emotion_id, title, poem], (err, result) => {
             if (err) {
                 console.error("데이터 베이스 오류:", err);
                 return res.status(400).json({ diaryMessage: "서버가 요청을 처리할 수 없습니다. 나중에 다시 시도해주세요." });
