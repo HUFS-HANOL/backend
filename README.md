@@ -3,12 +3,7 @@
 ## 서버 실행 가이드
 
 ```
-git clone --branch min-auth_ver.1 https://github.com/HUFS-HANOL/backend.git
-```
-
-.env 파일 backend 폴더에 삽입 후 다음 터미널 실행
-
-```
+git clone https://github.com/HUFS-HANOL/backend.git
 npm install
 node server.js
 ```
