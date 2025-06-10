@@ -58,7 +58,7 @@ exports.getDiaryDetailByDate = async (req, res) => {
                 ? {
                     text: result.poem.text,
                     created_at: result.poem.created_at,
-                    title: result.poem.title || null, // 🎯 null 보정
+                    title: result.poem.title || null, //  null 보정
                 }
                 : null,
         };
