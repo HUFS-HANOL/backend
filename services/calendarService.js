@@ -116,12 +116,13 @@ exports.getDiaryEmotionPoemByDate = async (userId, date) => {
 
         const [poemRows] = await conn.query(
             `SELECT 
-                COALESCE(title, '') AS title,
-                poem_text, liked, created_at
-             FROM poems
-             WHERE diary_id = ?`,
+                poem_text AS text,
+                created_at
+            FROM poems
+            WHERE diary_id = ?`,
             [diary.id]
         );
+
 
         return {
             date,
