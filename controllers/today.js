@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 //data 파일
-const dataPath = path.join(__dirname, '../data/generated_poems_ex.json');
+const dataPath = path.join(__dirname, '../data/generated_poems_ex2.json');
 const poemData = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
 
 // 일기 데이터베이스 전송 
@@ -38,7 +38,7 @@ exports.todayPoem = async(req,res) => {
         const poemPhrase = await todayGeneratePoem(content,emotion_type)
         const poemTitle = poemPhrase.title
         const poemText = poemPhrase.content
-        const phraseText = "문구 미반영"
+        const phraseText = poemPhrase.phrase
         const emotion_id = await todayEmotion(diary_id,emotion_type);
     res.json(
         {
@@ -67,7 +67,7 @@ async function todayGeneratePoem(content, emotion_type){
         console.log('content, emotion_type 데이터 불일치');
         return {diaryMessage: "시, 문구 생성 오류"};
     }
-    return {title:found.title, content:found.content};
+    return {title:found.title, content:found.content, phrase:found.comforting_message};
 }catch(err){
     console.log('에러:',err);
     return {diaryMessage:"오류 발생"};
