@@ -4,6 +4,7 @@
 
 ```
 git clone https://github.com/HUFS-HANOL/backend.git
+cd backend
 npm install
 node server.js
 ```
